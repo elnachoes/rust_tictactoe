@@ -48,6 +48,10 @@ impl GameState {
                 _ => { return false; }
             }
 
+            if self.board_state[x_index][y_index] != SpaceState::Empty {
+                return false;
+            }
+
             if self.player_1_turn {
                 self.board_state[x_index][y_index] = SpaceState::Player1;
             }
