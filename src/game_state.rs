@@ -32,8 +32,8 @@ impl GameState {
         if select_string.len() == 2 {
             let mut x_index = 0;
             let mut y_index = 0;
-            let x_selection = select_string.chars().nth(0).unwrap();
-            let y_selection = select_string.chars().nth(1).unwrap();
+            let y_selection = select_string.chars().nth(0).unwrap();
+            let x_selection = select_string.chars().nth(1).unwrap();
 
             match x_selection {
                 '0' => { x_index = 0; }
@@ -116,7 +116,7 @@ impl GameState {
                 return GameOverState::Player2Win
             }
         }
-        
+
         if self.check_if_tie() {
             return GameOverState::Tie
         }
