@@ -1,34 +1,21 @@
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub enum SpaceState {
-    Empty,
-    Player1,
-    Player2,
-}
-
-#[derive(Clone, Debug)]
-pub enum GameOverState {
-    NotOver,
-    Player1Win,
-    Player2Win,
-    Tie
-}
+use crate::objects::{GameOverState, PlayerTurn, SpaceState};
 
 #[derive(Clone, Debug)]
 pub struct GameState {
     pub board_state : Vec<Vec<SpaceState>>,
-    pub player_1_turn : bool,
+    pub player_turn : PlayerTurn
 }
 
 impl GameState {
     pub fn new() -> GameState {
-        GameState { board_state: vec![vec![SpaceState::Empty; 3]; 3], player_1_turn: true }
+        GameState { board_state: vec![vec![SpaceState::new(); 3]; 3], player_turn: PlayerTurn::new() }
     }
 
     pub fn switch_turns(&mut self) {
-        self.player_1_turn = !self.player_1_turn;
+        self.player_turn.switch();
     }
 
-    pub fn claim(&mut self, select_string : &String) -> bool {
+    pub fn claim_space(&mut self, select_string : &String) -> bool {
         if select_string.len() == 2 {
             let mut x_index = 0;
             let mut y_index = 0;
@@ -52,11 +39,9 @@ impl GameState {
                 return false;
             }
 
-            if self.player_1_turn {
-                self.board_state[x_index][y_index] = SpaceState::Player1;
-            }
-            else {
-                self.board_state[x_index][y_index] = SpaceState::Player2;
+            match self.player_turn {
+                PlayerTurn::Player1 => { self.board_state[x_index][y_index] = SpaceState::Player1; }
+                PlayerTurn::Player2 => { self.board_state[x_index][y_index] = SpaceState::Player2; }
             }
 
             return true;
@@ -66,7 +51,6 @@ impl GameState {
         }
     }
 
-    //TODO : implement
     fn check_if_tie(&self) -> bool {
         for i in &self.board_state {
             for j in i {
@@ -81,7 +65,6 @@ impl GameState {
 
     //TODO : implement
     pub fn determine_game_over_state(&self) -> GameOverState {
-        let mut player_won = false;
         //horizontal/vertical win
         for x in 0..3 {
             if self.board_state[0][x] == self.board_state[1][x] && self.board_state[1][x] == self.board_state[2][x] {

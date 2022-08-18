@@ -1,5 +1,5 @@
-pub mod game_state;
+pub mod objects;
+pub use objects::{*};
 
-pub use game_state::GameState;
-pub use game_state::SpaceState;
-pub use game_state::GameOverState;
+pub mod systems;
+pub use systems::{*};
