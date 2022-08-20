@@ -1,0 +1,1 @@
+This is a very basic project I created to get more familiar with rust, its syntax, and oo from a more top down procedural esc fashion.

@@ -17,37 +17,38 @@ impl GameState {
 
     pub fn claim_space(&mut self, select_string : &String) -> bool {
         if select_string.len() == 2 {
-            let mut x_index = 0;
-            let mut y_index = 0;
+            let x_index : usize;
+            let y_index : usize;
             let y_selection = select_string.chars().nth(0).unwrap();
             let x_selection = select_string.chars().nth(1).unwrap();
 
             match x_selection {
-                '0' => { x_index = 0; }
-                '1' => { x_index = 1; }
-                '2' => { x_index = 2; }
-                _ => { return false; }
+                '0' => { x_index = 0 }
+                '1' => { x_index = 1 }
+                '2' => { x_index = 2 }
+                _ => { return false }
             }
+
             match y_selection {
-                '0' => { y_index = 0; }
-                '1' => { y_index = 1; }
-                '2' => { y_index = 2; }
-                _ => { return false; }
+                '0' => { y_index = 0 }
+                '1' => { y_index = 1 }
+                '2' => { y_index = 2 }
+                _ => { return false }
             }
 
             if self.board_state[x_index][y_index] != SpaceState::Empty {
-                return false;
+                return false
             }
 
             match self.player_turn {
-                PlayerTurn::Player1 => { self.board_state[x_index][y_index] = SpaceState::Player1; }
-                PlayerTurn::Player2 => { self.board_state[x_index][y_index] = SpaceState::Player2; }
+                PlayerTurn::Player1 => { self.board_state[x_index][y_index].claim(&self.player_turn) }
+                PlayerTurn::Player2 => { self.board_state[x_index][y_index].claim(&self.player_turn) }
             }
 
-            return true;
+            return true
         }
         else {
-            return false;
+            return false
         }
     }
 
