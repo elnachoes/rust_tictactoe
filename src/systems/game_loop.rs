@@ -1,10 +1,4 @@
-use crate::{
-    GameState, 
-    PlayerTurn, 
-    GameOverState, 
-    get_input, 
-    draw_board
-};
+use crate::{ GameState, PlayerTurn, GameOverState, get_input, draw_board };
 
 /// this is the main game loop for tic tac toe
 pub fn game_loop() {
@@ -25,8 +19,7 @@ pub fn game_loop() {
             let input = get_input();
             let is_valid_input = game_state.claim_space(&input);
             if is_valid_input {
-                game_state.switch_turns();
-                match game_state.determine_game_over_state() {
+                match game_state.determine_game_over() {
                     GameOverState::Player1Win => {
                         draw_board(&game_state);
                         println!("PLAYER 1 WINS!");
@@ -44,6 +37,7 @@ pub fn game_loop() {
                     }
                     GameOverState::NotOver => {}
                 }
+                game_state.switch_turns()
             }
             else {
                 println!("invalid input try again (xy)");

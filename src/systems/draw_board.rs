@@ -15,8 +15,8 @@ pub fn draw_board(game_state : &GameState) {
         for j in i {
             match j {
                 SpaceState::Empty => { row_string.push_str("[ ]") }
-                SpaceState::Player1 => { row_string.push_str("[x]") }
-                SpaceState::Player2 => { row_string.push_str("[o]") }
+                SpaceState::Player1 => { row_string.push_str("[X]") }
+                SpaceState::Player2 => { row_string.push_str("[O]") }
             }
         }
         println!("{}",row_string);
