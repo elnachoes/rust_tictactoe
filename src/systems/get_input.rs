@@ -6,11 +6,8 @@ pub fn get_input() -> String {
     let stdin = io::stdin();
 
     let result = stdin.read_line(&mut input);
-    match result {
-        Err(_) => {
-            panic!("error : input error of some kind")
-        }
-        _ => {}
+    if let Err(_) = result {
+        panic!("error : input error of some kind")
     }
 
     input.replace("\r", "").replace("\n", "")

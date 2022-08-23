@@ -24,7 +24,7 @@ impl GameState {
                 '2' => { 2 }
                 _ => { return false }
             };
-
+            
             let y_index = match select_string.chars().nth(0).unwrap() {
                 '0' => { 0 }
                 '1' => { 1 }
@@ -63,9 +63,8 @@ impl GameState {
         //this determines if there is a tie or if the game is ongoing because there wasn't a win or a tie
         for i in &self.board_state {
             for j in i {
-                match j {
-                    SpaceState::Empty => { return GameOverState::NotOver }
-                    _ => {}
+                if let SpaceState::Empty = j {
+                    return GameOverState::NotOver
                 }
             }
         }
